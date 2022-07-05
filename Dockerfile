@@ -64,10 +64,11 @@ COPY --chown=xclient:xusers --from=inno /home/xclient/.wine /home/xclient/.wine
 RUN mkdir /work && chown xclient:xusers -R /work
 
 # Wine really doesn't like to be run as root, so let's use a non-root user
-USER xclient
+USER root
 ENV HOME /home/xclient
 ENV WINEPREFIX /home/xclient/.wine
 ENV WINEARCH win32
 
+RUN chown root:xusers -R /home/xclient/.wine
+
 WORKDIR /work
-ENTRYPOINT ["iscc"]
